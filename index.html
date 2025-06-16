@@ -1,123 +1,156 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Remember Me - d4vd</title>
-    <style>
-        /* Estilos para el fondo animado */
-        body {
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            background: #0d0d0d;
-            font-family: Arial, sans-serif;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Remember Me - d4vd</title>
 
-        .background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .flower {
-            width: 100px;
-            height: 100px;
-            position: relative;
-            animation: bloom 10s infinite alternate ease-in-out;
-        }
-
-        .petal {
-            width: 30px;
-            height: 60px;
-            background: #ff69b4;
-            position: absolute;
-            border-radius: 50% 50% 0 0;
-            transform-origin: bottom center;
-        }
-
-        @keyframes bloom {
-            0% { transform: scale(0.8) rotate(0deg); }
-            100% { transform: scale(1.2) rotate(360deg); }
-        }
-
-        /* Estilos para la letra */
-        .lyrics-container {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: white;
-            text-align: center;
-            max-width: 80%;
-        }
-
-        .lyric-line {
-            opacity: 0;
-            transition: opacity 1s ease-in;
-            margin: 15px 0;
-            font-size: 1.2em;
-        }
-
-        .lyric-line.active {
-            opacity: 1;
-        }
-
-        /* Estilo para el audio (oculto pero funcional) */
-        #audio-player {
-            display: none;
-        }
-    </style>
-</head>
-<body>
-    <!-- Fondo animado -->
-    <div class="background">
-        <div class="flower">
-            <div class="petal" style="transform: rotate(0deg) translateY(-30px);"></div>
-            <div class="petal" style="transform: rotate(60deg) translateY(-30px);"></div>
-            <div class="petal" style="transform: rotate(120deg) translateY(-30px);"></div>
-            <div class="petal" style="transform: rotate(180deg) translateY(-30px);"></div>
-            <div class="petal" style="transform: rotate(240deg) translateY(-30px);"></div>
-            <div class="petal" style="transform: rotate(300deg) translateY(-30px);"></div>
-        </div>
-    </div>
-
-    <!-- Reproductor de audio -->
-    
-    <audio src="sounds/remember-me-d4vd.mp3" autoplay loop> </audio>
-
-    <!-- Contenedor de letra -->
-    <div class="lyrics-container">
-        <div class="lyric-line" id="line1">I'll remember you</div>
-        <div class="lyric-line" id="line2">I'll remember us</div>
-        <div class="lyric-line" id="line3">I'll remember me</div>
-        <div class="lyric-line" id="line4">I'll remember everything</div>
-        <!-- Añade más líneas según sea necesario -->
-    </div>
-
-    <script>
-        // Script para mostrar la letra progresivamente
-        const lines = document.querySelectorAll('.lyric-line');
-        let currentLine = 0;
-
-        function showNextLine() {
-            if (currentLine < lines.length) {
-                lines[currentLine].classList.add('active');
-                currentLine++;
-                setTimeout(showNextLine, 3000); // Cambia cada 3 segundos
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script> 
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Poppins', 'sans-serif'],
+          },
+          animation: {
+            'fade-in-up': 'fadeInUp 1s ease-out forwards',
+            'float': 'float 6s ease-in-out infinite',
+          },
+          keyframes: {
+            fadeInUp: {
+              '0%': { opacity: '0', transform: 'translateY(20px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' }
+            },
+            float: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-10px)' }
             }
+          }
         }
+      }
+    }
+  </script>
 
-        // Iniciar cuando se cargue la página
-        window.addEventListener('load', () => {
-            showNextLine();
-        });
-    </script>
+  <!-- GSAP para animaciones SVG avanzadas -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script> 
+
+  <!-- Estilo adicional personalizado -->
+  <style>
+    body {
+      background: radial-gradient(circle at center, #0f0f0f, #1a1a1a);
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .flower-petal {
+      transform-origin: center bottom;
+      opacity: 0.9;
+    }
+
+    .center-glow {
+      filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
+    }
+  </style>
+</head>
+<body class="relative overflow-hidden">
+
+  <!-- Fondo con estrellas -->
+  <div class="fixed inset-0 z-0 bg-black">
+    <div class="absolute inset-0 opacity-30" style="
+      background-image: url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2210%22 height=%2210%22 viewBox=%220 0 10 10%22%3E%3Ccircle cx=%221%22 cy=%221%22 r=%221%22 fill=%22white%22/%3E%3C/svg%3E');
+      background-size: 40px 40px;
+    "></div>
+  </div>
+
+  <!-- Flor SVG animada -->
+  <div id="flower-container" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 z-10 pointer-events-none">
+    <svg viewBox="0 0 200 200" class="w-full h-full animate-float">
+      <!-- Tallo -->
+      <path d="M100 170 Q100 60 100 30" stroke="#4ade80" stroke-width="4" fill="none" stroke-dasharray="5,5"/>
+
+      <!-- Hojas -->
+      <path d="M60 120 Q100 90 140 120" fill="#34d399" opacity="0.8"/>
+      <path d="M70 80 Q100 50 130 80" fill="#10b981" opacity="0.8"/>
+
+      <!-- Pétalos -->
+      <g id="petal-group">
+        <circle class="flower-petal" cx="100" cy="50" r="12" fill="#f9a8d4"/>
+        <circle class="flower-petal" cx="130" cy="60" r="12" fill="#f9a8d4"/>
+        <circle class="flower-petal" cx="150" cy="90" r="12" fill="#f9a8d4"/>
+        <circle class="flower-petal" cx="140" cy="125" r="12" fill="#f9a8d4"/>
+        <circle class="flower-petal" cx="100" cy="150" r="12" fill="#f9a8d4"/>
+        <circle class="flower-petal" cx="60" cy="125" r="12" fill="#f9a8d4"/>
+        <circle class="flower-petal" cx="50" cy="90" r="12" fill="#f9a8d4"/>
+        <circle class="flower-petal" cx="70" cy="60" r="12" fill="#f9a8d4"/>
+      </g>
+
+      <!-- Centro brillante -->
+      <circle cx="100" cy="100" r="15" fill="#facc15" class="center-glow"/>
+    </svg>
+  </div>
+
+  <!-- Letra de la canción -->
+  <div class="fixed inset-0 flex items-center justify-center z-20 px-6">
+    <div class="max-w-2xl text-center space-y-6">
+      <p class="text-2xl md:text-3xl font-light tracking-wide text-white opacity-0 translate-y-4 animate-fade-in-up">I'll remember you</p>
+      <p class="text-2xl md:text-3xl font-light tracking-wide text-white opacity-0 translate-y-4 animate-fade-in-up">I'll remember us</p>
+      <p class="text-2xl md:text-3xl font-light tracking-wide text-white opacity-0 translate-y-4 animate-fade-in-up">I'll remember me</p>
+      <p class="text-2xl md:text-3xl font-light tracking-wide text-white opacity-0 translate-y-4 animate-fade-in-up">I'll remember everything</p>
+      <p class="text-2xl md:text-3xl font-light tracking-wide text-white opacity-0 translate-y-4 animate-fade-in-up">When I'm gone</p>
+      <p class="text-2xl md:text-3xl font-light tracking-wide text-white opacity-0 translate-y-4 animate-fade-in-up">When I'm gone</p>
+      <p class="text-2xl md:text-3xl font-light tracking-wide text-white opacity-0 translate-y-4 animate-fade-in-up">When I'm gone</p>
+      <p class="text-2xl md:text-3xl font-light tracking-wide text-white opacity-0 translate-y-4 animate-fade-in-up">When I'm gone</p>
+    </div>
+  </div>
+
+  <!-- Botón de control de audio -->
+  <button id="toggleAudioBtn" class="fixed bottom-6 right-6 z-30 bg-pink-500 hover:bg-pink-600 text-white rounded-full p-4 shadow-lg transition-all duration-300 transform hover:scale-105 focus:outline-none">
+    <svg id="audioIcon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
+      <path d="M9 2a1 1 0 000 2H4v12h5a1 1 0 100-2H5V4h4a1 1 0 001-1z" />
+      <path d="M11 4a1 1 0 10-2 0v12a1 1 0 102 0V4z" />
+      <path d="M15 5a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h10zM7 8v6h6V8H7z" />
+    </svg>
+  </button>
+
+  <!-- Reproductor de audio -->
+  <audio id="audioPlayer" src="sounds/remember-me-d4vd.mp3" autoplay loop></audio>
+
+  <!-- Script para animar la flor y controlar el audio -->
+  <script>
+    // Animación de los pétalos con GSAP
+    gsap.to(".flower-petal", {
+      rotation: 360,
+      transformOrigin: "center bottom",
+      repeat: -1,
+      ease: "linear",
+      duration: 15
+    });
+
+    // Control de audio
+    const toggleAudioBtn = document.getElementById("toggleAudioBtn");
+    const audioPlayer = document.getElementById("audioPlayer");
+    const audioIcon = document.getElementById("audioIcon");
+
+    // Iniciar silenciado por seguridad del navegador
+    audioPlayer.muted = false;
+
+    toggleAudioBtn.addEventListener("click", () => {
+      if (audioPlayer.muted) {
+        audioPlayer.muted = false;
+        audioIcon.innerHTML = '<path d="M9 2a1 1 0 000 2H4v12h5a1 1 0 100-2H5V4h4a1 1 0 001-1z" /><path d="M11 4a1 1 0 10-2 0v12a1 1 0 102 0V4z" />';
+      } else {
+        audioPlayer.muted = true;
+        audioIcon.innerHTML = '<path d="M9 2a1 1 0 000 2H4v12h5a1 1 0 100-2H5V4h4a1 1 0 001-1z" /><path d="M11 4a1 1 0 10-2 0v12a1 1 0 102 0V4z" /><path d="M15 5a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h10zM7 8v6h6V8H7z" />';
+      }
+    });
+
+    // Animación de entrada de letra con delay progresivo
+    document.querySelectorAll('.animate-fade-in-up').forEach((el, index) => {
+      setTimeout(() => {
+        el.style.animationPlayState = 'running';
+      }, index * 800);
+    });
+  </script>
 </body>
 </html>
