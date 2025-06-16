@@ -33,7 +33,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background-color: rgba(0, 0, 0, 0.5); /* Oscurece un poco el video */
+      background-color: rgba(0, 0, 0, 0.5); 
       display: flex;
       align-items: center;
       justify-content: center;
@@ -57,31 +57,33 @@
 </head>
 <body>
 
-  <!-- Video de fondo -->
   <video class="video-background" autoplay muted loop>
-    <source src="videos/background.mp4"  type="video/mp4" />
+    <source src="videos/fondo.mp4"  type="video/mp4" />
     Tu navegador no soporta la etiqueta de video.
   </video>
 
-  <!-- Contenedor de texto -->
   <div class="overlay">
-    <div class="quote" id="quote">Bienvenido a mi página</div>
+    <div class="quote" id="quote">Remember Me</div>
   </div>
 
   <script>
-    // Lista de frases que quieres mostrar
+
     const quotes = [
-      "La vida es lo que pasa mientras haces otros planes.",
-      "Hoy es un buen día para aprender algo nuevo.",
-      "Sigue tus sueños, pero lleva snacks.",
-      "El éxito no es final, el fracaso no es fatal: lo que importa es el valor para continuar.",
-      "Haz hoy lo que otros no quieren, haz mañana lo que otros no pueden."
+      "Espero que me recuerdes, incluso cuando el tiempo intente borrar el recuerdo.",
+      "Cada momento que compartimos está grabado para siempre en mi corazón.",
+      "Dejaste una huella en mi alma que nadie más podrá alcanzar.",
+      "No importa a dónde te lleve la vida, siempre estarás en mis pensamientos.",
+      "Aunque ya no esté ahí, nunca dejaré de acordarme de ti.",
+      "El mundo cambia, la gente sigue adelante… pero mis sentimientos por ti nunca lo harán.",
+      "Si algún día olvidas todo, solo recuerda que fuiste amada profundamente.",
+      "Llevaré tu recuerdo conmigo a través de cada etapa de mi vida.",
+      "Aunque estemos separados, siempre serás parte de quien soy.",
+      "<h1>Te quiero mucho Sami</h1>"
     ];
 
     let currentQuote = 0;
     const quoteElement = document.getElementById("quote");
 
-    // Cambiar frase cada X segundos
     setInterval(() => {
       quoteElement.style.animation = 'none';
       setTimeout(() => {
@@ -89,7 +91,7 @@
         quoteElement.textContent = quotes[currentQuote];
         currentQuote = (currentQuote + 1) % quotes.length;
       }, 10);
-    }, 5000); // 5 segundos entre frases
+    }, 10000);
   </script>
 
 </body>
