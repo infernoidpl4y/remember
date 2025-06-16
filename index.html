@@ -1,110 +1,105 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Video Fondo con Frases</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Video Fondo con Frases</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-    body, html {
-      height: 100%;
-      font-family: Arial, sans-serif;
-      overflow: hidden;
-    }
+      body,
+      html {
+        height: 100%;
+        font-family: Arial, sans-serif;
+        overflow: hidden;
+      }
 
-    .video-background {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      z-index: -1;
-    }
+      .video-background {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: -1;
+      }
 
-    .overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.5);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      text-align: center;
-      padding: 20px;
-    }
+      .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        text-align: center;
+        padding: 20px;
+      }
 
-    .quote {
-      font-size: 2em;
-      max-width: 80%;
-      opacity: 0;
-      transform: scale(0.95);
-      transition: all 1s ease-in-out;
-      pointer-events: none;
-    }
+      .quote {
+        font-size: 2em;
+        max-width: 80%;
+        opacity: 0;
+        transform: scale(0.95);
+        transition: all 1s ease-in-out;
+        pointer-events: none;
+      }
 
-    .quote.visible {
-      opacity: 1;
-      transform: scale(1);
-    }
-  </style>
-</head>
-<body>
+      .quote.visible {
+        opacity: 1;
+        transform: scale(1);
+      }
+    </style>
+  </head>
+  <body>
+    <video class="video-background" autoplay loop>
+      <source src="videos/fondo.mp4" type="video/mp4" /> Tu navegador no soporta la etiqueta de video.
+    </video>
+    <div class="overlay">
+      <div class="quote" id="quote">Remember Me</div>
+    </div>
+    <script>
+      const video = document.querySelector('.video-background');
 
-  <video class="video-background" autoplay loop>
-    <source src="videos/fondo.mp4"  type="video/mp4" />
-    Tu navegador no soporta la etiqueta de video.
-  </video>
+      function playVideo() {
+        if (video.paused || video.ended) {
+          video.play().catch(err => {
+            console.warn("No se pudo reproducir el video automáticamente:", err);
+          });
+        }
+      }
+      window.addEventListener('load', playVideo);
+      document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') {
+          playVideo();
+        }
+      });
+      window.addEventListener('click', playVideo, {
+        once: true
+      });
+      const quotes = ["Espero que me recuerdes, incluso cuando el tiempo intente borrar el recuerdo.", "Cada momento que compartimos está grabado para siempre en mi corazón.", "Dejaste una huella en mi alma que nadie más podrá alcanzar.", "No importa a dónde te lleve la vida, siempre estarás en mis pensamientos.", "Aunque ya no esté ahí, nunca dejaré de acordarme de ti.", "El mundo cambia, la gente sigue adelante… pero mis sentimientos por ti nunca lo harán.", "Si algún día olvidas todo, solo recuerda que fuiste amada profundamente.", "Llevaré tu recuerdo conmigo a través de cada etapa de mi vida.", "Aunque estemos separados, siempre serás parte de quien soy.", "Te quiero mucho Sami💙"];
+      let currentQuote = 0;
+      const quoteElement = document.getElementById("quote");
 
-  <div class="overlay">
-    <div class="quote" id="quote">Remember Me</div>
-  </div>
-
-  <script>
-
-    const quotes = [
-      "Espero que me recuerdes, incluso cuando el tiempo intente borrar el recuerdo.",
-      "Cada momento que compartimos está grabado para siempre en mi corazón.",
-      "Dejaste una huella en mi alma que nadie más podrá alcanzar.",
-      "No importa a dónde te lleve la vida, siempre estarás en mis pensamientos.",
-      "Aunque ya no esté ahí, nunca dejaré de acordarme de ti.",
-      "El mundo cambia, la gente sigue adelante… pero mis sentimientos por ti nunca lo harán.",
-      "Si algún día olvidas todo, solo recuerda que fuiste amada profundamente.",
-      "Llevaré tu recuerdo conmigo a través de cada etapa de mi vida.",
-      "Aunque estemos separados, siempre serás parte de quien soy.",
-      "Te quiero mucho Sami💙"
-    ];
-
-    let currentQuote = 0;
-    const quoteElement = document.getElementById("quote");
-
-    function showNextQuote() {
-
-      quoteElement.classList.remove("visible");
-
-      setTimeout(() => {
-        quoteElement.textContent = quotes[currentQuote];
-        currentQuote = (currentQuote + 1) % quotes.length;
-
-        quoteElement.classList.add("visible");
-      }, 1000);
-    }
-
-
-    quoteElement.textContent = quotes[currentQuote];
-    quoteElement.classList.add("visible");
-    currentQuote = (currentQuote + 1) % quotes.length;
-
-    setInterval(showNextQuote, 6000);
-  </script>
-
-</body>
+      function showNextQuote() {
+        quoteElement.classList.remove("visible");
+        setTimeout(() => {
+          quoteElement.textContent = quotes[currentQuote];
+          currentQuote = (currentQuote + 1) % quotes.length;
+          quoteElement.classList.add("visible");
+        }, 1000);
+      }
+      quoteElement.textContent = quotes[currentQuote];
+      quoteElement.classList.add("visible");
+      currentQuote = (currentQuote + 1) % quotes.length;
+      setInterval(showNextQuote, 6000);
+    </script>
+  </body>
 </html>
