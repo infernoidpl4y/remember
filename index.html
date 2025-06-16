@@ -16,16 +16,11 @@
           },
           animation: {
             'fade-in-up': 'fadeInUp 1s ease-out forwards',
-            'float': 'float 6s ease-in-out infinite',
           },
           keyframes: {
             fadeInUp: {
               '0%': { opacity: '0', transform: 'translateY(20px)' },
               '100%': { opacity: '1', transform: 'translateY(0)' }
-            },
-            float: {
-              '0%, 100%': { transform: 'translateY(0)' },
-              '50%': { transform: 'translateY(-10px)' }
             }
           }
         }
@@ -33,100 +28,67 @@
     }
   </script>
 
-  <!-- GSAP para animaciones SVG avanzadas -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script> 
-
-  <!-- Estilo adicional personalizado -->
   <style>
     body {
-      background: radial-gradient(circle at center, #0f0f0f, #1a1a1a);
+      margin: 0;
+      padding: 0;
       font-family: 'Poppins', sans-serif;
+      background-color: #000;
+      overflow: hidden;
     }
 
-    .flower-petal {
-      transform-origin: center bottom;
-      opacity: 0.9;
+    .video-background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      z-index: -1;
+      filter: brightness(0.6);
     }
 
-    .center-glow {
-      filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
+    .lyric-line {
+      opacity: 0;
+      transform: translateY(20px);
     }
   </style>
 </head>
-<body class="relative overflow-hidden">
+<body class="text-white">
 
-  <!-- Fondo con estrellas -->
-  <div class="fixed inset-0 z-0 bg-black">
-    <div class="absolute inset-0 opacity-30" style="
-      background-image: url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2210%22 height=%2210%22 viewBox=%220 0 10 10%22%3E%3Ccircle cx=%221%22 cy=%221%22 r=%221%22 fill=%22white%22/%3E%3C/svg%3E');
-      background-size: 40px 40px;
-    "></div>
-  </div>
-
-  <!-- Flor SVG animada -->
-  <div id="flower-container" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 z-10 pointer-events-none">
-    <svg viewBox="0 0 200 200" class="w-full h-full animate-float">
-      <!-- Tallo -->
-      <path d="M100 170 Q100 60 100 30" stroke="#4ade80" stroke-width="4" fill="none" stroke-dasharray="5,5"/>
-
-      <!-- Hojas -->
-      <path d="M60 120 Q100 90 140 120" fill="#34d399" opacity="0.8"/>
-      <path d="M70 80 Q100 50 130 80" fill="#10b981" opacity="0.8"/>
-
-      <!-- Pétalos -->
-      <g id="petal-group">
-        <circle class="flower-petal" cx="100" cy="50" r="12" fill="#f9a8d4"/>
-        <circle class="flower-petal" cx="130" cy="60" r="12" fill="#f9a8d4"/>
-        <circle class="flower-petal" cx="150" cy="90" r="12" fill="#f9a8d4"/>
-        <circle class="flower-petal" cx="140" cy="125" r="12" fill="#f9a8d4"/>
-        <circle class="flower-petal" cx="100" cy="150" r="12" fill="#f9a8d4"/>
-        <circle class="flower-petal" cx="60" cy="125" r="12" fill="#f9a8d4"/>
-        <circle class="flower-petal" cx="50" cy="90" r="12" fill="#f9a8d4"/>
-        <circle class="flower-petal" cx="70" cy="60" r="12" fill="#f9a8d4"/>
-      </g>
-
-      <!-- Centro brillante -->
-      <circle cx="100" cy="100" r="15" fill="#facc15" class="center-glow"/>
-    </svg>
-  </div>
+  <!-- Video de fondo -->
+  <video autoplay muted loop playsinline class="video-background" id="bgVideo">
+    <source src="videos/background.mp4" type="video/mp4">
+    Tu navegador no soporta la etiqueta de video.
+  </video>
 
   <!-- Letra de la canción -->
   <div class="fixed inset-0 flex items-center justify-center z-20 px-6">
     <div class="max-w-2xl text-center space-y-6">
-      <p class="text-2xl md:text-3xl font-light tracking-wide text-white opacity-0 translate-y-4 animate-fade-in-up">I'll remember you</p>
-      <p class="text-2xl md:text-3xl font-light tracking-wide text-white opacity-0 translate-y-4 animate-fade-in-up">I'll remember us</p>
-      <p class="text-2xl md:text-3xl font-light tracking-wide text-white opacity-0 translate-y-4 animate-fade-in-up">I'll remember me</p>
-      <p class="text-2xl md:text-3xl font-light tracking-wide text-white opacity-0 translate-y-4 animate-fade-in-up">I'll remember everything</p>
-      <p class="text-2xl md:text-3xl font-light tracking-wide text-white opacity-0 translate-y-4 animate-fade-in-up">When I'm gone</p>
-      <p class="text-2xl md:text-3xl font-light tracking-wide text-white opacity-0 translate-y-4 animate-fade-in-up">When I'm gone</p>
-      <p class="text-2xl md:text-3xl font-light tracking-wide text-white opacity-0 translate-y-4 animate-fade-in-up">When I'm gone</p>
-      <p class="text-2xl md:text-3xl font-light tracking-wide text-white opacity-0 translate-y-4 animate-fade-in-up">When I'm gone</p>
+      <p class="lyric-line text-2xl md:text-3xl font-light tracking-wide">I'll remember you</p>
+      <p class="lyric-line text-2xl md:text-3xl font-light tracking-wide">I'll remember us</p>
+      <p class="lyric-line text-2xl md:text-3xl font-light tracking-wide">I'll remember me</p>
+      <p class="lyric-line text-2xl md:text-3xl font-light tracking-wide">I'll remember everything</p>
+      <p class="lyric-line text-2xl md:text-3xl font-light tracking-wide">When I'm gone</p>
+      <p class="lyric-line text-2xl md:text-3xl font-light tracking-wide">When I'm gone</p>
+      <p class="lyric-line text-2xl md:text-3xl font-light tracking-wide">When I'm gone</p>
+      <p class="lyric-line text-2xl md:text-3xl font-light tracking-wide">When I'm gone</p>
     </div>
   </div>
 
   <!-- Botón de control de audio -->
   <button id="toggleAudioBtn" class="fixed bottom-6 right-6 z-30 bg-pink-500 hover:bg-pink-600 text-white rounded-full p-4 shadow-lg transition-all duration-300 transform hover:scale-105 focus:outline-none">
     <svg id="audioIcon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
-      <path d="M9 2a1 1 0 000 2H4v12h5a1 1 0 100-2H5V4h4a1 1 0 001-1z" />
+      <path d="M9 2a1 1 0 000 2H4v12h5a1 1 0 100-2H5V4h4a1 0 001-1z" />
       <path d="M11 4a1 1 0 10-2 0v12a1 1 0 102 0V4z" />
-      <path d="M15 5a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h10zM7 8v6h6V8H7z" />
     </svg>
   </button>
 
   <!-- Reproductor de audio -->
   <audio id="audioPlayer" src="sounds/remember-me-d4vd.mp3" autoplay loop></audio>
 
-  <!-- Script para animar la flor y controlar el audio -->
+  <!-- Script para animar la letra y controlar el audio -->
   <script>
-    // Animación de los pétalos con GSAP
-    gsap.to(".flower-petal", {
-      rotation: 360,
-      transformOrigin: "center bottom",
-      repeat: -1,
-      ease: "linear",
-      duration: 15
-    });
-
     // Control de audio
     const toggleAudioBtn = document.getElementById("toggleAudioBtn");
     const audioPlayer = document.getElementById("audioPlayer");
@@ -141,14 +103,16 @@
         audioIcon.innerHTML = '<path d="M9 2a1 1 0 000 2H4v12h5a1 1 0 100-2H5V4h4a1 1 0 001-1z" /><path d="M11 4a1 1 0 10-2 0v12a1 1 0 102 0V4z" />';
       } else {
         audioPlayer.muted = true;
-        audioIcon.innerHTML = '<path d="M9 2a1 1 0 000 2H4v12h5a1 1 0 100-2H5V4h4a1 1 0 001-1z" /><path d="M11 4a1 1 0 10-2 0v12a1 1 0 102 0V4z" /><path d="M15 5a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h10zM7 8v6h6V8H7z" />';
+        audioIcon.innerHTML = '<path d="M9 2a1 1 0 000 2H4v12h5a1 1 0 100-2H5V4h4a1 0 001-1z" /><path d="M11 4a1 1 0 10-2 0v12a1 1 0 102 0V4z" /><path d="M15 5a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h10zM7 8v6h6V8H7z" fill="currentColor"/>';
       }
     });
 
     // Animación de entrada de letra con delay progresivo
-    document.querySelectorAll('.animate-fade-in-up').forEach((el, index) => {
+    document.querySelectorAll('.lyric-line').forEach((el, index) => {
       setTimeout(() => {
-        el.style.animationPlayState = 'running';
+        el.style.transition = "opacity 1s ease, transform 1s ease";
+        el.style.opacity = "1";
+        el.style.transform = "translateY(0)";
       }, index * 800);
     });
   </script>
