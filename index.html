@@ -3,37 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Remember Me - d4vd</title>
-
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script> 
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['Poppins', 'sans-serif'],
-          },
-          animation: {
-            'fade-in-up': 'fadeInUp 1s ease-out forwards',
-          },
-          keyframes: {
-            fadeInUp: {
-              '0%': { opacity: '0', transform: 'translateY(20px)' },
-              '100%': { opacity: '1', transform: 'translateY(0)' }
-            }
-          }
-        }
-      }
-    }
-  </script>
-
+  <title>Video Fondo con Frases</title>
   <style>
-    body {
+    * {
       margin: 0;
       padding: 0;
-      font-family: 'Poppins', sans-serif;
-      background-color: #000;
+      box-sizing: border-box;
+    }
+
+    body, html {
+      height: 100%;
+      font-family: Arial, sans-serif;
       overflow: hidden;
     }
 
@@ -41,82 +21,76 @@
       position: fixed;
       top: 0;
       left: 0;
-      width: 100vw;
-      height: 100vh;
+      width: 100%;
+      height: 100%;
       object-fit: cover;
       z-index: -1;
-      filter: brightness(0.6);
     }
 
-    .lyric-line {
-      opacity: 0;
-      transform: translateY(20px);
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5); /* Oscurece un poco el video */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .quote {
+      font-size: 2em;
+      max-width: 80%;
+      animation: fade 3s ease-in-out;
+    }
+
+    @keyframes fade {
+      0% { opacity: 0; transform: scale(0.95); }
+      50% { opacity: 1; transform: scale(1); }
+      100% { opacity: 0; transform: scale(0.95); }
     }
   </style>
 </head>
-<body class="text-white">
+<body>
 
   <!-- Video de fondo -->
-  <video autoplay loop playsinline class="video-background" id="bgVideo">
-    <source src="videos/background.mp4" type="video/mp4">
+  <video class="video-background" autoplay muted loop>
+    <source src="videos/background.mp4"  type="video/mp4" />
     Tu navegador no soporta la etiqueta de video.
   </video>
 
-  <!-- Letra de la canción -->
-  <div class="fixed inset-0 flex items-center justify-center z-20 px-6">
-    <div class="max-w-2xl text-center space-y-6">
-      <p class="lyric-line text-2xl md:text-3xl font-light tracking-wide">Espero que me recuerdes, incluso cuando el tiempo intente borrar el recuerdo</p>
-      <p class="lyric-line text-2xl md:text-3xl font-light tracking-wide">Cada momento que compartimos está grabado para siempre en mi corazón</p>
-      <p class="lyric-line text-2xl md:text-3xl font-light tracking-wide">Dejaste una huella en mi alma que nadie más podrá alcanzar</p>
-      <p class="lyric-line text-2xl md:text-3xl font-light tracking-wide">No importa a dónde te lleve la vida, siempre estarás en mis pensamientos</p>
-      <p class="lyric-line text-2xl md:text-3xl font-light tracking-wide">Aunque ya no esté ahí, nunca dejaré de acordarme de ti</p>
-      <p class="lyric-line text-2xl md:text-3xl font-light tracking-wide">El mundo cambia, la gente sigue adelante… pero mis sentimientos por ti nunca lo harán</p>
-      <p class="lyric-line text-2xl md:text-3xl font-light tracking-wide">Si algún día olvidas todo, solo recuerda que fuiste amada profundamente</p>
-      <p class="lyric-line text-2xl md:text-3xl font-light tracking-wide">Llevaré tu recuerdo conmigo a través de cada etapa de mi vida</p>
-      <p class="lyric-line text-2xl md:text-3xl font-light tracking-wide">Aunque estemos separados, siempre serás parte de quien soy</p>
-      <h1 class="lyric-line text-2xl md:text-3xl font-light tracking-wide">Te quiero mucho Sami❤️</h1>
-    </div>
+  <!-- Contenedor de texto -->
+  <div class="overlay">
+    <div class="quote" id="quote">Bienvenido a mi página</div>
   </div>
 
-  <!-- Botón de control de audio -->
-  <button id="toggleAudioBtn" class="fixed bottom-6 right-6 z-30 bg-pink-500 hover:bg-pink-600 text-white rounded-full p-4 shadow-lg transition-all duration-300 transform hover:scale-105 focus:outline-none">
-    <svg id="audioIcon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
-      <path d="M9 2a1 1 0 000 2H4v12h5a1 1 0 100-2H5V4h4a1 0 001-1z" />
-      <path d="M11 4a1 1 0 10-2 0v12a1 1 0 102 0V4z" />
-    </svg>
-  </button>
-
-  <!-- Reproductor de audio -->
-   <!--  <audio id="audioPlayer" src="sounds/remember-me-d4vd.mp3" autoplay loop></audio> -->
-
-  <!-- Script para animar la letra y controlar el audio -->
   <script>
-    // Control de audio
-    const toggleAudioBtn = document.getElementById("toggleAudioBtn");
-    const audioPlayer = document.getElementById("audioPlayer");
-    const audioIcon = document.getElementById("audioIcon");
+    // Lista de frases que quieres mostrar
+    const quotes = [
+      "La vida es lo que pasa mientras haces otros planes.",
+      "Hoy es un buen día para aprender algo nuevo.",
+      "Sigue tus sueños, pero lleva snacks.",
+      "El éxito no es final, el fracaso no es fatal: lo que importa es el valor para continuar.",
+      "Haz hoy lo que otros no quieren, haz mañana lo que otros no pueden."
+    ];
 
-    // Iniciar silenciado por seguridad del navegador
-    audioPlayer.muted = false;
+    let currentQuote = 0;
+    const quoteElement = document.getElementById("quote");
 
-    toggleAudioBtn.addEventListener("click", () => {
-      if (audioPlayer.muted) {
-        audioPlayer.muted = false;
-        audioIcon.innerHTML = '<path d="M9 2a1 1 0 000 2H4v12h5a1 1 0 100-2H5V4h4a1 1 0 001-1z" /><path d="M11 4a1 1 0 10-2 0v12a1 1 0 102 0V4z" />';
-      } else {
-        audioPlayer.muted = true;
-        audioIcon.innerHTML = '<path d="M9 2a1 1 0 000 2H4v12h5a1 1 0 100-2H5V4h4a1 0 001-1z" /><path d="M11 4a1 1 0 10-2 0v12a1 1 0 102 0V4z" /><path d="M15 5a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h10zM7 8v6h6V8H7z" fill="currentColor"/>';
-      }
-    });
-
-    // Animación de entrada de letra con delay progresivo
-    document.querySelectorAll('.lyric-line').forEach((el, index) => {
+    // Cambiar frase cada X segundos
+    setInterval(() => {
+      quoteElement.style.animation = 'none';
       setTimeout(() => {
-        el.style.transition = "opacity 1s ease, transform 1s ease";
-        el.style.opacity = "1";
-        el.style.transform = "translateY(0)";
-      }, index * 800);
-    });
+        quoteElement.style.animation = 'fade 3s ease-in-out';
+        quoteElement.textContent = quotes[currentQuote];
+        currentQuote = (currentQuote + 1) % quotes.length;
+      }, 10);
+    }, 5000); // 5 segundos entre frases
   </script>
+
 </body>
 </html>
